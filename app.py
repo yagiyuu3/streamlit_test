@@ -10,6 +10,6 @@ if audio_bytes:
     try:
         audio_data = sr.AudioData(audio_bytes, 44100, 2)
         text = r.recognize_google(audio_data, language='ja-JP')
-        st.write("text")
+        st.write(text)
     except speech_recognition.exceptions.UnknownValueError:
         pass
