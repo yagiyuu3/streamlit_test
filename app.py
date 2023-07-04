@@ -7,6 +7,5 @@ r = sr.Recognizer()
 audio_bytes = audio_recorder()
 
 if audio_bytes:
-    audio = r.record(audio_bytes)
-    text = r.recognize_google(audio, language='ja-JP')
+    text = r.recognize_google(audio_bytes, language='ja-JP')
     st.write(text)
