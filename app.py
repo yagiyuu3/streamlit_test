@@ -4,7 +4,7 @@ import speech_recognition as sr
  
 r = sr.Recognizer()
 
-audio_bytes = audio_recorder(pause_threshold=2.0)
+audio_bytes = audio_recorder(pause_threshold=5.0)
 
 if audio_bytes:
 #     audio_data = sr.AudioData(audio_bytes, 44100, 2)
