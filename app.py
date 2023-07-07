@@ -1,6 +1,8 @@
 import streamlit as st
 from audio_recorder_streamlit import audio_recorder
 import openai
+from gtts import gTTS
+from io import BytesIO
 
 # Streamlit Community Cloudの「Secrets」からOpenAI API keyを取得
 openai.api_key = st.secrets.OpenAIAPI.openai_api_key
@@ -20,4 +22,11 @@ def voice_to_text():
     return transcript['text']
     
 if audio_bytes:
-    st.write(voice_to_text())
+    text = voice_to_text()
+    st.write(text)
+
+    # 文字起こしした文章を読み上げる
+    tts = gTTS(text, lang="ja")
+    audio_data = BytesIO()
+    tts.save(audio_data)
+    st.audio(audio_data.getvalue(), format="audio/wav")
