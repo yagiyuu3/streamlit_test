@@ -1,22 +1,17 @@
 import streamlit as st
-import pyttsx3
-import tempfile
+import streamlit.components.v1 as stc
+import base64
+import time
 
-st.set_page_config(page_title="Text-to-Speech App", page_icon=":microphone:")
-
-st.title("Text-to-Speech App")
-
-input_text = st.text_area("Enter Text Here")
-voice = st.selectbox("Select Voice", ["en", "ja"])
-
-if st.button("Speak"):
-    if input_text:
-        engine = pyttsx3.init()
-        engine.setProperty('voice', voice)
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as f:
-            fname = f.name
-            engine.save_to_file(input_text, fname)
-            engine.runAndWait()
-            st.audio(fname, format="audio/wav")
-    else:
-        st.warning("Please enter some text.")
+button = st.button('アプリ実行')
+if button:
+    audio_path1 = 'sample.wav' #入力する音声ファイル
+    audio_placeholder = st.empty()
+    file_ = open(audio_path1, "rb")
+    contents = file_.read()
+    file_.close()
+    audio_str = "data:audio/ogg;base64,%s"%(base64.b64encode(contents).decode())
+    audio_html = """<audio autoplay=True><source src="%s" type="audio/ogg" autoplay=True>Your browser does not support the audio element.</audio>""" %audio_str
+    audio_placeholder.empty()
+    time.sleep(0.5) #これがないと上手く再生されません
+    audio_placeholder.markdown(audio_html, unsafe_allow_html=True
